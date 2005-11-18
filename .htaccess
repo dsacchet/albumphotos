@@ -1,0 +1,4 @@
+AuthName "Album photos"
+AuthType Basic
+AuthUserFile /home/ouba/docs/perso/photos.users
+Require valid-user

@@ -1,0 +1,65 @@
+Changelog :
+
+- 27 septembre 2005 : Correction d'un bug concernant la gestion des caractères
+                      échappés provenant d'une variable GET
+
+- 14 septemble 2005 : Ajout du fichier TEMPLATE contenant la description des
+                      variables de sessions pouvant être utilisée lors de la
+                      création d'un template.
+
+                      Correction d'un bug sur le header filename qui n'est pas
+                      mis pour toutes les photos dans le script photo.php et
+                      ajout de la meme modification dans le script
+                      thumbnail.php
+
+		      Ajout de la taille de l'image, de la date de dernière
+                      de celle-ci afin de donner toutes les informations au
+                      navigateur pour la mise en cache, ainsi l'image ne se
+                      recharge pas quand on l'appelle deux fois de suite.
+
+- 13 septembre 2005 : Ajout de la taille originale dans le script d'affichage
+                      de la photo pour afficher l'image sans redimmensionnement
+
+                      Changement de la résolution pour ne garder que le plus
+                      grand nombre afin de gérer les deux orientations de
+                      façon transparente.
+
+- 12 septembre 2005 : Correction d'une faute de typographie dans le script
+                      browse.php qui était responsable d'un bug sur la
+                      navigation parmi les photos car la variable de session
+                      next_photo n'était pas nettoyé.
+
+- 09 septembre 2005 : Rajout de l'utilisateur spécial anonymous permettant
+                      de donner le droit de lecture sur une photo ou un
+                      album à un utilisateur non loggué. Cet utilisateur
+                      est différent de l'utilisateur everybody qui donne
+                      accès à toute personne "authentifié" alors que
+                      "anonymous" donne accès à toute personne en général.
+
+- 08 septembre 2005 : Ajout du nom de la photo dans les headers HTTP lors
+                      de l'affichage d'une photo avec le script photo.php
+                      afin d'avoir directement le nom de la photo quand on
+                      veut l'enregistrer
+
+- 02 septembre 2005 : Mise en place de la structure des templates
+                      Quand on vient de la page du browser, on calcule
+                      désormais la page sur laquelle se trouve la photo
+                      qu'on visualisait
+
+- 01 septembre 2005 : Passage d'une gestion des états basée sur les GET à
+                      une gestion par les sessions PHP.
+                      Réécriture du template par défaut pouyr utiliser la
+                      nouvelle gestion
+                      Introduction d'une navigation par page dans le module
+                      album.
+                      Correction de bug au niveau des photos ne contenant pas
+                      d'informations exif
+
+- 28 août 2003 : Ajout du téléchargement d'un album par un clic
+                 Validation XHTML 1.0 et CSS 2.0
+                 -> version 1.0
+- 26 août 2003 : Correction de bug
+                 -> version 1.0rc2
+- 12 août 2003 : Release de la première version
+                 -> version 1.0rc1
+- 21 juin 2003 : Début du projet

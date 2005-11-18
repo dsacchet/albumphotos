@@ -1,0 +1,84 @@
+1. Requirement
+
+You need a web server with a working installation of PHP4 with the following
+modules :
+	* gd support
+	* truetype support
+	* exif support
+You also need the ImageMagick package.
+
+2. Installation
+
+. Decompress the archive into a directory your web server is able to serve.
+. Edit the file config.php to match your configuration :
+   - $default_css : this is the relative path from the directory containing
+                    the album.php file to the css file for your photos albums.
+   - $http_base : this is the absolut url for accessing album.php from a
+                  browser onto your web server.
+   - $thumbnail_size : this is an integer for the maximum size (in height
+                       or in width) for yours thumbnails.
+   - $default_size : this is the default size for display the photos.
+   - $standard_sizes : this is an array containing all the size you want
+                       to make available to yours users.
+   - $album_dir : this is the absolut path into your filesystem up to the
+                  directory containing the photos. This directory must be
+                  accessible by the web server user. It is not necessary
+                  this directory is accessible directly from your web
+                  server name space. In clear, you can store photos outside
+                  from the namespace of the web server.
+   - $groups_file : this is the absolut path to the file containing
+                    about the users groups. The file must be accessible by the
+                    webserver user.
+   - $cmd_convert : absolut path to the "convert" binary from ImageMagick
+   - $cmd_cat : absolut path to the "cat" binary, the standard unix command
+   - $cmd_tar : absolut path to the "tar" binary, the archive command
+   - $font_* : arrays containing absolut path to different truetype fonts in
+               order to use into the image error messages.
+. Modify the AuthUserFile into the .htaccess file to point to the absolut
+  path of the file containing the users. The file must be accessible by the
+  webserver user. You could also modify the AuthName, this is the string
+  which will be displayed into the authentification box into the web browser
+  of yours users (optional if you don't want restriction on access).
+. Add some users to the file with the standard Apache command "htpasswd" or
+  "htpasswd2". Be careful, sometimes this command is only accessible to the
+  super user (i.e. in a directory like /usr/sbin or /usr/local/sbin). If you
+  you don't have the super user password, just specify the full path to the
+  command. If you are under ISS (I don't recommand this), you may have a
+  "clickodrome" to add yours users.
+
+3. Adding some photos
+  
+Put some photos into your $album_dir. There is some special directories and
+files to create in order to have commentaries and access control for yours
+albums.
+
+For example, if $album_dir is "/datas/albums", you could have some photos
+in this directory, for example "photo 1.jpg" and "photo 2.jpg".
+Firstly, you can restrict access to this directory by creating the files
+".this_users" and ".this_groups" containing, one per line, the users and
+groups who have the right to access to this directory. There are two special
+word, "anonymous" and "everybody". "anonymous" gives access to the current
+album to every visitor of your site even if he is not authentified,
+"everybody" allows every authentified user to see this album. Then you can
+add a comment (a description is more exact) for this directory (this album)
+by creating the file ".this_comments" and put your description into this file.
+
+Secondly, you can restrict access for each file individually by creating
+two subdirectory ".users" and ".groups" and creating for each file a
+file of the same name into each directories and put into those files the
+users and the groups who have the right to see this files. You also have
+the two special words "anonymous" and "everybody" with the same meaning.
+And finally, like for the directory, you can have a comment for each file
+by creating a directory ".comments" and create a file for each file of the
+album with the same name and containing the comment.
+
+Then you can apply this for each subdirectory of "/datas/albums", each
+of them representing an album.
+
+4. Style
+
+A valid CSS 2.0 file is provided with the distribution, feel free to modify
+it to fit your look and feel. You may validate your CSS to pretend keep the
+logo at the bottom of the page.
+
+Enjoy and have fun ...

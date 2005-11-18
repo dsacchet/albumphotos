@@ -1,0 +1,222 @@
+body {
+	margin: 10px;
+	background-color:#eeeeee;
+	font-family:verdana,sans-serif;
+	font-size:10pt;
+	font-weight:normal;
+}
+
+a {
+	text-decoration: none;
+	color: #dddddd;
+}
+
+a:hover {
+	color: gray;
+	background-color: #dddddd;
+}
+
+a.comments {
+	color: gray;
+}
+
+a:hover.comments {
+	background-color: gray;
+	color:#dddddd;
+}
+
+a.arrow {
+	color: gray;
+}
+
+a:hover.arrow {
+	background-color: gray;
+	color:#dddddd;
+}
+
+div.title {
+	width:100%;
+	margin:10px;
+	padding:10px;
+	background-color:gray;
+	color:white;
+	font-family:verdana,sans-serif;
+	font-size:16pt;
+	border-style:solid;
+	border-width: 1px 2px 2px 1px;
+	border-color: black;
+}
+
+div.albumnavlink {
+	width:100%;
+	margin:10px;
+	padding:2px 2px 2px 10px;
+	background-color:gray;
+	color:white;
+	font-size:8pt;
+	border-style:solid;
+	border-width: 1px 2px 2px 1px;
+	border-color: black;
+}
+
+div.albumdownload {
+	width:100%;
+	margin:10px;
+	padding:2px 2px 2px 10px;
+	background-color:gray;
+	color:white;
+	font-size:8pt;
+	border-style:solid;
+	border-width: 1px 2px 2px 1px;
+	border-color: black;
+}
+
+div.albumsubdirs {
+	width:100%;
+	margin:10px;
+	padding:2px 2px 2px 10px;
+	background-color:gray;
+	color:white;
+	font-size:8pt;
+	border-style:solid;
+	border-width: 1px 2px 2px 1px;
+	border-color: black;
+}
+
+table.browsenav {
+	width:100%;
+	text-align:center;
+	margin:0px;
+	width:100%;
+	margin:10px;
+	background-color:gray;
+	font-size:8pt;
+	border-style:solid;
+	border-width: 1px 2px 2px 1px;
+	border-color: black;
+}
+
+tr.browsenav {
+	margin:0px;
+	padding:0px;
+}
+
+div.photo {
+	width:100%;
+	text-align:center;
+}
+
+td.browsenavarrow {
+	font-family:verdana,sans-serif;
+	font-weight:bold;
+	font-size:25pt;
+	width:60px;
+	background-color: #dddddd;
+}
+
+td.browsenavthumbnail {
+	width:160px;
+	background-color: #dddddd;
+	padding:5px;
+}
+
+td.browsenavres {
+	color:white;
+}
+
+td.browsenavphotoname {
+	color:white;
+	font-size:10pt;
+	font-weight:bold;
+	padding:2px;
+}
+
+td.browsenavthumbnailname {
+	color:white;
+}
+
+td.browsenavcomments {
+	text-align:left;
+	border-style:none;
+	border-width:0px;
+	padding:30px;
+	background-color: #dddddd;
+	vertical-align:top;
+}
+
+img {
+	border-style: solid;
+	border-width: 4px;
+	border-color: white;
+}
+
+table.photos {
+	padding:0px;
+	margin:10px;
+	width:100%;
+	background-color: #dddddd;
+}
+
+td.name {
+	padding: 2px 0px 2px 5px;
+	border-style: solid solid none solid;
+	border-width: 1px 2px 0px 1px;
+	border-color: black black black black;
+	background-color:gray;
+	color:white;
+	font-size:10pt;
+	font-weight:bold;
+}
+
+td.thumbnail {
+	padding:5px;
+	border-style: none none none solid;
+	border-width: 0px 0px 0px 1px;
+	border-color: black;
+	text-align: center;
+}
+
+td.comments {
+	padding:5px;
+	border-style: none none none none;
+	border-width: 0px 0px 0px 0px;
+	border-color: black;
+}
+
+td.exif {
+	padding:5px;
+	border-style: none solid none none;
+	border-width: 0px 2px 0px 0px;
+	border-color: black;
+}
+
+td.size {
+	padding: 0px 0px 0px 5px;
+	border-style: none solid solid solid;
+	border-width: 0px 2px 2px 1px;
+	border-color: gray black black black;
+	background-color:gray;
+	color:white;
+	font-size:8pt;
+}
+
+div.footer {
+	width:100%;
+	margin:10px;
+	padding:2px 2px 2px 10px;
+	font-size:8pt;
+	font-style:italic;
+	border-style:none;
+	border-width: 0px;
+	text-align:right;
+}
+div.validator {
+	width:100%;
+	margin:10px;
+	padding:2px 2px 2px 10px;
+	font-size:8pt;
+	font-style:italic;
+	border-style:none;
+	border-width: 0px;
+	text-align:right;
+}

@@ -1,0 +1,93 @@
+This file contains the documentation to write new templates. A template is
+a classic php file with at least two functions :
+
+browse();
+album();
+
+The first one is call at the end of browse script which is used to navigate
+through the photos. The second one is call at the end of album script which
+is used to navigate rapidly through albums and photos. To construct the page,
+you have several session variables which is described below :
+
+$_SESSION['user'] : Current user, empty if no http authentification 
+
+$_SESSION['groups'] : Array containing the groups to which the user is member.
+                      May be empty (count = 0)
+
+$_SESSION['album_dir'] : Directory of the album sets up into the configuration
+                         file
+
+$_SESSION['sizes'] : Sizes define into the configuration files and for which
+                     a thumbnail may be generated. You could provide a list
+                     to change the resolution
+
+$_SESSION['album'] : The current album, indeed, the path relative to album_dir
+                     Should be use to call photo.php, thumbnail.php, etc ...
+                     May be overwritten by $_GET['album'].
+
+$_SESSION['size'] : Current selected size. The special keyword "originale"
+                    indicate to display the image without modification. May
+                    be overwritten by $_GET['size'].
+
+$_SESSION['subdirs_comments'] : Array containing the comments associated to
+                                the subdirs array.
+
+$_SESSION['subdirs'] : Array containing the sub directories available.
+
+$_SESSION['photos_comments'] : Array containing the comments associated to
+                               the photos array.
+
+$_SESSION['photos'] : Array containing the photos available in the current
+                      directory/album.
+
+$_SESSION['photos_per_row'] : If you choose to present photos with a table,
+                              this variable contains the number of photos
+                              per line. May be overwritten by
+                              $_GET['photos_per_row'].
+
+$_SESSION['rows_of_photos'] : If you choose to present photos with a table,
+                              this variable contains the number of rows.
+                              May be overwritten by $_GET['rows_of_photos'].
+
+$_SESSION['photos_per_page'] : This is calculated from the two previous and
+                               is then used into the calculation of paging.
+
+
+$_SESSION['version'] : Containing the current release version of albumphotos.
+
+$_SESSION['css'] : Containing the path to the css to be used.
+
+$_SESSION['album_comments'] : Containing the comments about the current album.
+
+$_SESSION['current_page'] : Containing the current_page, may be overwritten by
+                            $_GET['current_page'].
+
+$_SESSION['current_photo'] : Containing the index of the current photo into
+                            the $_SESSION['photos'] array.
+
+$_SESSION['nb_pages'] : Indicates the number of page in function of the
+                        number of photos and the number of photos per page.
+
+$_SESSION['next_page'] : Indicates the number of the next page. Not set if
+                         you are on the last page.
+$_SESSION['prev_page'] : Indicates the number of the previous page. Not set if
+                         you are on the first page.
+
+$_SESSION['first_photo'] : Indicate the index of the first photo of the
+                           current page. Used to iterate the photo list into
+                           the album script.
+$_SESSION['last_photo'] : Indicate the index of the last photo of the current
+                          page.
+
+$_SESSION['nb_photos'] : Containing the total number of photos into the
+                         current album.
+
+$_SESSION['next_photo'] : Containing the index of the next photo. Not set if
+                          you are on the last photo.
+
+$_SESSION['prev_photo'] : Containing the index of the previous photo. Not set
+                          if you are on the first photo.
+
+An example template is included into the distribution. This template has
+usage of all of this variable. You can learn a lot of thing about writting
+template by read this template.
