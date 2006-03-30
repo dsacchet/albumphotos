@@ -86,24 +86,7 @@
 
 /* On récupère l'information sur l'orientation */
 
-	$exif_datas=exif_read_data($album_dir.$current_album.$photo);
-	switch($exif_datas['Orientation']) {
-		case '1':
-			$rotate=false;
-			break;
-		case '3':
-			$rotate=180;
-			break;
-		case '6':
-			$rotate=90;
-			break;
-		case '8':
-			$rotate=270;
-			break;
-		default:
-			$rotate=false;
-			$break;
-	}
+	$rotate=get_rotation($album_dir.$current_album.$photo);
 
 /* Si la taille vaut originale, on affiche directement la photo */
 

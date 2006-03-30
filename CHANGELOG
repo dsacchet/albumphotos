@@ -1,5 +1,23 @@
 Changelog :
 
+- 30 mars 2006      : Nettoyage du code, suppression de deux fonctions qui
+                      n'étaient plus utilisées dans functions.php
+
+- 20 mars 2006      : Correction d'erreurs de syntaxe dans config.php
+
+- 12 janvier 2006   : Création de la fonction get_rotation qui récupère
+                      de manière lisible l'information de rotation fourni
+                      par certains appareils photos dans les informations
+                      EXIF. Utilisation de cette fonction dans dans les
+                      scripts thumbnail.php et photo.php
+                      
+                      Création d'une fonction photo_resize qui transforme
+                      une photo en la retaillant, ajoutant un commentaire
+                      et/ou un copyright en surimpression de l'image
+                      
+                      Mise à jour du fichier de configuration pour refléter
+                      les nouveaux paramètres pour les nouvelles fonctions.
+
 - 27 septembre 2005 : Correction d'un bug concernant la gestion des caractères
                       échappés provenant d'une variable GET
 
@@ -12,7 +30,7 @@ Changelog :
                       ajout de la meme modification dans le script
                       thumbnail.php
 
-		      Ajout de la taille de l'image, de la date de dernière
+                      Ajout de la taille de l'image, de la date de dernière
                       de celle-ci afin de donner toutes les informations au
                       navigateur pour la mise en cache, ainsi l'image ne se
                       recharge pas quand on l'appelle deux fois de suite.

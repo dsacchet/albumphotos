@@ -31,51 +31,6 @@
  * ************************************************************************** */
 
 /* ************************************************************************** *
- * This routine removes all attributes from a given tag except the attributes *
- * specified in the array $attr. (from PHP Manual and joris878@hotmail.com).  *
- * ************************************************************************** */
-
-	function filter($haystack,$firstneedle,$secondneedle) {
-		$firstpositionx = strpos(strtoupper($haystack),
-		                         strtoupper($firstneedle));
-		$secondpositionx = strpos(strtoupper($haystack),
-		                          strtoupper($secondneedle),
-		                          $firstpositionx);
-		$haystack = substr($haystack,0,$secondpositionx);
-		$resultx = substr($haystack,$firstpositionx+strlen($firstneedle));
-		return $resultx;
-	}
-
-	function stripeentag($msg,$tag,$attr) {
-		$lengthfirst = 0;
-		//$msg = stripslashes(stripslashes($msg));
-		while (strstr(substr($msg,$lengthfirst),"<$tag ")!="") {
-			$imgstart = $lengthfirst+strpos(substr($msg,$lengthfirst),"<$tag ");
-			$partafterwith = substr($msg,$imgstart);
-			$img = substr($partafterwith,0,strpos($partafterwith,">")+1);
-			$d1 = substr($img,1,strlen($img)-2);
-			if(strstr($d1,"<")!="" && strstr($d1,">")!="") break;
-
-			for($i=1;$i<=count($attr);$i++) {
-				$val = "";
-				//if(strstr($img,$attr[$i]."=\"")!="") {
-				if(strstr($img,$attr[$i]."=\\\"")!="") {
-					$val = filter($img."~~",$attr[$i]."=\\\"","~~");
-					$val = filter("~~".$val,"~~","\\\"");
-				} elseif(strstr($img,$attr[$i]."=")!="") {
-					$val = filter($img."~~",$attr[$i]."=","~~");
-					$val = filter("~~".$val,"~~"," ");
-				}
-				if(strlen($val)>0) $out .= " ".$attr[$i]."=\"".$val."\"";
-			}
-			$msg = substr($msg,0,$imgstart)."<".$tag.$out.">".substr($partafterwith,strpos($partafterwith,">")+1);
-			$lengthfirst = $imgstart+3;
-		}
-		return $msg;
-	}
-
-
-/* ************************************************************************** *
  * Fonction indiquant si un utilisateur appartenant à certains groupes sont   *
  * autorisés à voir le fichier protégé par ces fichiers                       *
  * ************************************************************************** */
@@ -100,7 +55,7 @@
 
 			while(!feof($fuser)) {
 
-			/* On récupère une ligne, on trim la fin, on compare, et *
+			/* On récupère une ligne, on trim la fin, on compare, et
 			 * si c'est bon on arrête la boucle */
 
 				$buffer=fgets($fuser,4096);
@@ -340,7 +295,7 @@
 
 		header("Content-type: image/png");
 		$im     = imagecreate($x,$y);
-		$blakc  = imagecolorallocate($im,0,0,0);
+		$black  = imagecolorallocate($im,0,0,0);
 		$white  = imagecolorallocate($im,255,255,255);
 		$red    = imagecolorallocate($im,255,0,0);
 		imagefilledrectangle($im,0,0,$x-1,$y-1,$black);
@@ -440,6 +395,141 @@
 	function getmicrotime() {
 		list($usec, $sec) = explode(" ",microtime());
 		return ((float)$usec + (float)$sec);
+	}
+
+/* ************************************************************************** *
+ * Est ce que la photo contient une information de rotation                   *
+ * ************************************************************************** */
+
+	function get_rotation($file) {
+		$exif_datas=exif_read_data($file);
+		if($exif_datas===false) {
+			return false;
+		}
+		switch($exif_datas['Orientation']) {
+			case '1':
+				return false;
+			case '3':
+				return 180;
+			case '6':
+				return 90;
+			case '8':
+				return 270;
+			default:
+				return false;
+		}
+	}
+
+/* ************************************************************************** *
+ * Traitement d'une photo pour l'affichage                                    *
+ *                                                                            *
+ * Cette fonction permet :                                                    *
+ * - le redimensionnement et la rotation                                      *
+ * - l'ajout d'un copyright sur le côté droit de la photo                     *
+ * - l'ajout d'un commentaire en bas de l'image                               *
+ * ************************************************************************** */
+
+	function photo_resize($infile,$outfile,$newsize,$rotation,$copyright,$comments,$keepprofile) {
+		global $cmd_convert;
+		global $photo_font;
+
+		// On vérifie les paramètres en entrée
+
+		if(file_exists($infile) === FALSE) {
+			return FALSE;
+		}
+
+		if(touch($outfile) === FALSE) {
+			return FALSE;
+		}
+
+		// On récupère les dimensions de l'image initiale
+		$initial_sizes=getimagesize($infile);
+
+		if($newsize==$initial_sizes[0] ||
+		   $newsize==$initial_sizes[1] ||
+		   $newsize===FALSE) {
+		// Pas de redimmensionnement nécessaire
+			$newsize=max($initial_sizes[0],$initial_sizes[1]);
+			$resize=FALSE;
+
+		// Redimensionnement nécessaire
+		} else {
+			$resize=TRUE;
+			$final_sizes[0]=$newsize;
+			$final_sizes[1]=round($initial_sizes[1]*$newsize/$initial_sizes[0]);
+			if($initial_sizes[0] < $initial_sizes[1]) {
+				$temp=$final_sizes[1];
+				$final_sizes[1]=$final_sizes[0];
+				$final_sizes[0]=$temp;
+			}
+		}
+
+		// On inverse les dimensions en fonctions de la rotation
+		if($rotation == 90 || $rotation == 270) {
+			$temp=$final_sizes[1];
+			$final_sizes[1]=$final_sizes[0];
+			$final_sizes[0]=$temp;
+		}
+
+		// On calcule la taille des polices pour que ce soit lisible
+		$copyright_fontsize=round($final_sizes[0]*0.015);
+		$comments_fontsize=round($final_sizes[1]*0.026);
+		if($comments !== FALSE) {
+			$copyright_offset=$comments_fontsize+20;
+		} else {
+			$copyright_offset=0;
+		}
+
+		// On écrit la commande
+		$command=$cmd_convert." ";
+		$command.=$infile." ";
+
+		// On redimmensionne ???
+		if($resize === TRUE) {
+			$command.="-resize ".$final_sizes[0]."x".$final_sizes[1]." ";
+		}
+
+		// On tourne ???
+		if($rotation !== FALSE) {
+			$commant.="-rotate ".$rotation." ";
+		}
+
+		// On a un commentaire ou un copyright ???
+		if($copyright!==FALSE || $comments!==FALSE) {
+			$command.="-font ".$photo_font." ";
+		}
+
+		// On a un copyright ???
+		if($copyright!==FALSE) {
+			$command.="-pointsize ".$copyright_fontsize." ";
+			$command.="-rotate 90 -gravity Southwest ";
+			$command.="-fill white ";
+			$command.="-stroke black ";
+			$command.="-draw \"text ".$copyright_offset.",0 '".$copyright."'\" ";
+			$command.="-rotate -90 ";
+		}
+
+		// On a des commentaires ???
+		if($comments!==FALSE) {
+			$command.="-pointsize ".$comments_fontsize." ";
+			$command.="-gravity South ";
+			$command.="-fill '#0008' ";
+			$command.="-stroke none ";
+			$command.="-draw \"rectangle 0,".($final_sizes[1]-$copyright_offset+10).",".$final_sizes[0].",".$final_sizes[1]."\"  ";
+			$command.="-fill white ";
+			$command.="-stroke black ";
+			$command.="-draw \"text 0,0 '".$comments."'\" ";
+		}
+
+		// Si keepprofile est égal à false, on reset les informations exif
+		if($keepprofile === FALSE) {
+			$command.="-strip ";
+		}
+
+		// On ajoute le fichier de sortie
+		$command.=$outfile;
+		echo $command;
 	}
 
 ?>

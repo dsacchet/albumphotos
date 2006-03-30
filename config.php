@@ -60,6 +60,10 @@
 	$cmd_cat="/bin/cat";
 	$cmd_tar="/bin/tar";
 
+/* Définitions des paramètres de polices */
+
+	$photo_font="Bookman-DemiItalic";
+
 /* Définitions des chemins vers les fontes truetype */
 
 	$font_arial   = array(
