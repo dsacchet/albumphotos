@@ -97,7 +97,7 @@
 		$command .= " \"" . $album_dir.$current_album.$photo;
 		$command .= "\" -resize " . $thumbnail_size . "x" . $thumbnail_size;
 		$command .= " +profile \"0\" \"";
-		$command .= $album_dir.$current_album.".cache/".$photo.".thumbnail";
+		$command .= "jpg:".$album_dir.$current_album.".cache/".$photo.".thumbnail";
 		$command .= "\"";
 		system($command);
 	}

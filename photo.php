@@ -93,10 +93,12 @@
 	if($_GET['size'] == 'originale' ) {
 		if($rotate) {
 			$command=$cmd_convert . " -rotate " . $rotate;
+			$command .= " \"" . $album_dir.$current_album.$photo . "\" jpg:-";
 		} else {
 			$command=$cmd_cat;
+			$command .= " \"" . $album_dir.$current_album.$photo . "\"";
 		}
-		$command .= " \"" . $album_dir.$current_album.$photo . "\" -";
+		
 		header('Content-type: image/jpeg');
 		header('Content-Disposition: inline; filename="'.$photo.'"');
 		header('Content-Length: '.filesize($album_dir.$current_album.$photo));
@@ -131,7 +133,7 @@
 		$command .= " \"" . $album_dir.$current_album.$photo . "\"";
 		$command .= " -resize " . $size.'x'.$size;
 		$command .= " +profile \"0\"";
-		$command .= " -";
+		$command .= " jpg:-";
 		header("Content-type: image/jpeg");
 		if($size=="originale") {
 			$filename=$photo;
@@ -154,7 +156,7 @@
 		}
 		$command .= " \"" . $album_dir.$current_album.$photo;
 		$command .= "\" -resize " . $size.'x'.$size . " +profile \"0\" \"";
-		$command .= $album_dir.$current_album.".cache/".$photo.".".$size;
+		$command .= "jpg:".$album_dir.$current_album.".cache/".$photo.".".$size;
 		$command .= "\"";
 		system($command);
 	}

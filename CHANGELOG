@@ -1,5 +1,13 @@
 Changelog :
 
+- 10 mai 2007       : Ajout du format de sortie sur les commande "convert"
+                      suite à un changement de comportement par défaut en
+                      ImageMagick 6.3.3 par rapport 6.3.0
+                      Modification également d'une commande lors de
+                      l'affichage d'une image à la taille orginale sans
+                      rotation
+                      Version 1.0 => 1.1
+
 - 30 mars 2006      : Nettoyage du code, suppression de deux fonctions qui
                       n'étaient plus utilisées dans functions.php
 
