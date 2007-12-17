@@ -36,6 +36,7 @@
 	$char_encoding="";
 	$http_base="/albumphotos/album.php";
 	$thumbnail_size="120";
+	$thumbnail_square="true";
 	$default_size="800";
 	$template="ouba.org.php";
 	$standard_sizes=array(

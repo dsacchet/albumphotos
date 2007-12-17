@@ -72,7 +72,24 @@
 
 /* On récupère l'information sur l'orientation */
 
-	$rotate=get_rotation($album_dir.$current_album.$photo);
+	$exif_datas=exif_read_data($album_dir.$current_album.$photo);
+	switch($exif_datas['Orientation']) {
+		case '1':
+			$rotate=false;
+			break;
+		case '3':
+			$rotate=180;
+			break;
+		case '6':
+			$rotate=90;
+			break;
+		case '8':
+			$rotate=270;
+			break;
+		default:
+			$rotate=false;
+			$break;
+	}
 
 /* On vérifie qu'il existe une thumbnail, si oui, on vérifie la taille *
  * si la thumbnail n'existe pas ou si elle a la mauvaise taille, on    *
@@ -85,21 +102,35 @@
 		if($size[0] != $thumbnail_size && $size[1] != $thumbnail_size) {
 			$recreate=true;
 		}
+		if($thumbnail_square === true && $size[0] != $size[1]) {
+			$recreate=true;
+		}
 	} else {
 		$recreate=true;
 	}
+#$recreate=true;
 	if($recreate) {
+
 		$command=$cmd_convert;
-		$command .= " -size " . $thumbnail_size . "x" . $thumbnail_size;
+		$command .= " \"" . $album_dir.$current_album.$photo."\"";
+		if($thumbnail_square) {
+			$size=getimagesize($album_dir.$current_album.$photo);
+			if($size[0] > $size[1]) {
+				$command .= " -crop " .$size[1]. "x" .$size[1]. "+" .(($size[0]-$size[1])/2). "+0";
+			} else {
+				$command .= " -crop " .$size[0]. "x" .$size[0]. "+0+" .(($size[1]-$size[0])/2);
+			}
+		}
 		if($rotate) {
 			$command .= " -rotate " . $rotate;
 		}
-		$command .= " \"" . $album_dir.$current_album.$photo;
-		$command .= "\" -resize " . $thumbnail_size . "x" . $thumbnail_size;
-		$command .= " +profile \"0\" \"";
-		$command .= "jpg:".$album_dir.$current_album.".cache/".$photo.".thumbnail";
-		$command .= "\"";
+		$command .= " -resize " . $thumbnail_size . "x" . $thumbnail_size;
+		$command .= " +profile \"0\" \"jpg:";
+		$command .= $album_dir.$current_album.".cache/".$photo.".thumbnail\"";
 		system($command);
+
+#echo $command;
+#die;
 	}
 
 /* Affichage de l'image */

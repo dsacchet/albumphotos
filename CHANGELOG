@@ -1,5 +1,12 @@
 Changelog :
 
+- 17 dec 2007       : Ajout de la possiblite de generer des thumbnails
+                      carrees, permettant d'avoir quelque chose de plus
+		      sympa au niveau de la page de browser.
+                      Ce comportement est parametre avec le booleen
+		      "thumbnail_square" dans le fichier de configuration
+                      Version 1.1 => 1.2
+
 - 10 mai 2007       : Ajout du format de sortie sur les commande "convert"
                       suite à un changement de comportement par défaut en
                       ImageMagick 6.3.3 par rapport 6.3.0
